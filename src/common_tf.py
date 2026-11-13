@@ -1,9 +1,5 @@
 """
 common_tf.py  --  TensorFlow helpers for DTAQ, LSTM-Q and CNN-BiGRU-Q
-======================================================================
-Architectures are NEVER re-typed from the paper text: they are rebuilt
-from the config.json stored inside the original .keras checkpoints.
-
 Depends on common.py for all numpy/pandas helpers and constants.
 """
 
@@ -51,7 +47,7 @@ def reseed(seed=SEED):
 # ------------------------------------------------------------------ custom layers
 class NonCrossingQuantileHead(layers.Layer):
     """
-    Non-crossing quantile output head (manuscript Section III-B).
+    Non-crossing quantile output head .
     Guarantees quantile ordering via softplus increments from the median.
     Used by all three models: LSTM-Q, CNN-BiGRU-Q, and DTAQ.
     """
@@ -85,7 +81,7 @@ class NonCrossingQuantileHead(layers.Layer):
 
 class BahdanauAttention(layers.Layer):
     """
-    Bahdanau-style temporal attention over TCN hidden states (manuscript Section III-C).
+    Bahdanau-style temporal attention over TCN hidden states .
     Returns (context_vector, attention_weights).
     """
     def __init__(self, units, **kwargs):
