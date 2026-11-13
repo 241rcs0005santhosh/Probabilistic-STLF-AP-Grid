@@ -1,0 +1,157 @@
+{
+  "project_name": "DTAQ-based Probabilistic Short-Term Load Forecasting",
+  "dataset": {
+    "filename": "APSLDC_15min_Clean.xlsx",
+    "resolution_minutes": 15,
+    "timestamp_column": "Datetime",
+    "target_column": "Actual_MW",
+    "raw_target_column": "Actuals in MW",
+    "total_features": 26
+  },
+  "experimental_conditions": {
+    "C1": {
+      "description": "Short-context baseline: 1-step look-back (15 minutes), all 26 features",
+      "look_back": 1,
+      "horizon": 1,
+      "feature_count": 26,
+      "features": "all"
+    },
+    "C2": {
+      "description": "Full historical context: 48-step look-back (12 hours), all 26 features",
+      "look_back": 48,
+      "horizon": 1,
+      "feature_count": 26,
+      "features": "all"
+    },
+    "C3": {
+      "description": "Compact feature subset: 48-step look-back (12 hours), Top-10 features selected by permutation importance",
+      "look_back": 48,
+      "horizon": 1,
+      "feature_count": 10,
+      "features": [
+        "Actual_MW",
+        "solarenergy",
+        "solarradiation",
+        "hour",
+        "TEMP",
+        "dew",
+        "humidity",
+        "feelslike",
+        "uvindex",
+        "is_weekend"
+      ],
+      "c3_checkpoint_features": [
+        "Actual_MW",
+        "solarenergy",
+        "solarradiation",
+        "hour",
+        "TEMP",
+        "dew",
+        "humidity",
+        "feelslike",
+        "uvindex",
+        "is_weekend"
+      ],
+      "manuscript_table3_features": [
+        "Actual_MW",
+        "hour",
+        "solarenergy",
+        "solarradiation",
+        "uvindex",
+        "windspeed",
+        "feelslike",
+        "TEMP",
+        "sealevelpressure",
+        "icon_enc"
+      ]
+    }
+  },
+  "quantiles": [0.05, 0.10, 0.25, 0.50, 0.75, 0.90, 0.95],
+  "nominal_coverage_alpha": 0.10,
+  "nominal_prediction_interval": "90%",
+  "partition_fractions": {
+    "train": 0.70,
+    "calibration_validation": 0.10,
+    "test": 0.20
+  },
+  "training": {
+    "batch_size": 256,
+    "seed": 42,
+    "optimizer": "Adam",
+    "initial_learning_rate": 0.001,
+    "learning_rate_schedule": "CosineDecayRestarts(first_decay_steps=10*steps_per_epoch, alpha=1e-5)",
+    "loss": "7-Quantile Average Pinball Loss",
+    "max_epochs": {
+      "LSTM_Q": 30,
+      "CNN_BiGRU_Q": 60,
+      "DTAQ": 60
+    },
+    "patience": {
+      "LSTM_Q": 5,
+      "CNN_BiGRU_Q": 5,
+      "DTAQ": 15
+    }
+  },
+  "architectures": {
+    "LSTM_Q": {
+      "layers": ["InputLayer", "LSTM(64)", "Dropout(0.1)", "Dense(32, relu)", "NonCrossingQuantileHead(7)"],
+      "parameters": {
+        "C1": 25607,
+        "C2": 25607,
+        "C3": 21511
+      }
+    },
+    "CNN_BiGRU_Q": {
+      "layers": [
+        "InputLayer",
+        "Conv1D(64, k=3, pad=same, relu)", "BatchNorm", "Dropout(0.1)",
+        "Conv1D(64, k=3, pad=same, relu)", "BatchNorm", "Dropout(0.1)",
+        "Bidirectional(GRU(64))", "Dropout(0.1)",
+        "Dense(32, relu)", "NonCrossingQuantileHead(7)"
+      ],
+      "parameters": {
+        "C1": 72199,
+        "C2": 72199,
+        "C3": 69127
+      }
+    },
+    "DTAQ": {
+      "receptive_field_steps": 125,
+      "tcn_filters": 64,
+      "kernel_size": 3,
+      "dilations": [1, 2, 4, 8, 16],
+      "attention_mechanism": "Bahdanau Temporal Attention (units=32)",
+      "projection_units": 64,
+      "dropout": 0.1,
+      "output_head": "NonCrossingQuantileHead(7)",
+      "parameters": {
+        "C1": 127207,
+        "C2": 127207,
+        "C3": 123111
+      }
+    }
+  },
+  "manuscript_table3_permutation_importance": {
+    "Actual_MW": {"delta_RMSE_MW": 1799.71, "category": "demand", "in_c3": true},
+    "hour": {"delta_RMSE_MW": 20.29, "category": "temporal", "in_c3": true},
+    "solarenergy": {"delta_RMSE_MW": 8.90, "category": "meteorological", "in_c3": true},
+    "solarradiation": {"delta_RMSE_MW": 8.28, "category": "meteorological", "in_c3": true},
+    "uvindex": {"delta_RMSE_MW": 5.44, "category": "meteorological", "in_c3": true},
+    "windspeed": {"delta_RMSE_MW": 3.90, "category": "meteorological", "in_c3": true},
+    "feelslike": {"delta_RMSE_MW": 2.82, "category": "meteorological", "in_c3": true},
+    "TEMP": {"delta_RMSE_MW": 2.55, "category": "meteorological", "in_c3": true},
+    "sealevelpressure": {"delta_RMSE_MW": 2.01, "category": "meteorological", "in_c3": true},
+    "icon_enc": {"delta_RMSE_MW": 1.90, "category": "categorical", "in_c3": true}
+  },
+  "manuscript_reference_results": {
+    "C1_LSTM_Q":       {"RMSE": 217.28, "MAE": 112.20, "MAPE": 1.2843, "R2": 0.9746, "PICP_raw": 0.8961, "PICP_cqr": 0.8925, "q_hat": -1.80},
+    "C1_CNN_BiGRU_Q":  {"RMSE": 216.69, "MAE": 108.67, "MAPE": 1.2425, "R2": 0.9747, "PICP_raw": 0.9481, "PICP_cqr": 0.9155, "q_hat": -47.12},
+    "C1_DTAQ":         {"RMSE": 214.58, "MAE": 109.20, "MAPE": 1.2416, "R2": 0.9752, "PICP_raw": 0.9032, "PICP_cqr": 0.9165, "q_hat": 14.84},
+    "C2_LSTM_Q":       {"RMSE": 206.54, "MAE": 104.51, "MAPE": 1.2079, "R2": 0.9771, "PICP_raw": 0.9056, "PICP_cqr": 0.8851, "q_hat": -11.57},
+    "C2_CNN_BiGRU_Q":  {"RMSE": 199.99, "MAE": 105.17, "MAPE": 1.2087, "R2": 0.9785, "PICP_raw": 0.9378, "PICP_cqr": 0.9126, "q_hat": -23.05},
+    "C2_DTAQ":         {"RMSE": 173.88, "MAE":  77.16, "MAPE": 0.9035, "R2": 0.9837, "PICP_raw": 0.8791, "PICP_cqr": 0.8926, "q_hat": 6.96},
+    "C3_LSTM_Q":       {"RMSE": 207.11, "MAE":  98.13, "MAPE": 1.1301, "R2": 0.9769, "PICP_raw": 0.9138, "PICP_cqr": 0.8951, "q_hat": -12.61},
+    "C3_CNN_BiGRU_Q":  {"RMSE": 189.34, "MAE":  90.48, "MAPE": 1.0390, "R2": 0.9807, "PICP_raw": 0.9424, "PICP_cqr": 0.9234, "q_hat": -21.05},
+    "C3_DTAQ":         {"RMSE": 173.82, "MAE":  75.55, "MAPE": 0.8860, "R2": 0.9837, "PICP_raw": 0.8382, "PICP_cqr": 0.8824, "q_hat": 17.75}
+  }
+}
