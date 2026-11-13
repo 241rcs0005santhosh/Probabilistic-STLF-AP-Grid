@@ -85,12 +85,6 @@ paper-3-gravity/
 │   ├── s08_weather_lag_diagnostic.py   # Step 8: Weather information-set stress tests
 │   └── s09_component_ablation.py       # Step 9: Sequential component ablation study
 └── results/                            # Generated output directory
-    ├── tables/                         # CSV and DOCX summary tables (T01–T14)
-    ├── figures/                        # High-resolution (600 DPI) publication figures
-    ├── cache/                          # Cached quantile predictions (.npz)
-    └── results/                        # JSON diagnostics and intermediate CSV outputs
-```
-
 ---
 
 ## 4. Installation & Environment Setup
