@@ -33,19 +33,7 @@ The experimental evaluation is structured into three distinct configurations:
 | **C3** | 48 steps | 12 hours | 10 features | Compact feature subset selected via permutation feature importance |
 
 ### C3 Feature Subsets
-* **Pre-trained Checkpoint Feature Set (10 features):** The 9 pre-trained `.keras` checkpoints (`C3_*.keras`) were trained on:
-  1. `Actual_MW` (historical demand)
-  2. `solarenergy`
-  3. `solarradiation`
-  4. `hour` (diurnal cycle)
-  5. `TEMP` (ambient temperature)
-  6. `dew`
-  7. `humidity`
-  8. `feelslike`
-  9. `uvindex`
-  10. `is_weekend` (calendar schedule)
-
-* **Revised Manuscript Table 3 Ranking:** As reported in Table 3 of `Manuscript_Revision_Pass1`, training-window permutation importance yields the following Top-10 ranking ($\Delta\text{RMSE}$ in MW):
+As reported in Table 3 of `Manuscript`, training-window permutation importance yields the following Top-10 ranking ($\Delta\text{RMSE}$ in MW):
   1. `Actual_MW` ($1799.71$)
   2. `hour` ($20.29$)
   3. `solarenergy` ($8.90$)
@@ -146,8 +134,8 @@ Save the processed dataset as `APSLDC_15min_Clean.xlsx` in the repository root (
    `TEMP`, `feelslike`, `dew`, `humidity`, `precip`, `precipprob`, `windgust`, `windspeed`, `winddir`, `sealevelpressure`, `cloudcover`, `visibility`, `solarradiation`, `solarenergy`, `uvindex`, `severerisk`, `conditions`, `icon`, `preciptype`, `DAY NAME`, `holiday_status`, `hour`, `dow`, `is_weekend`.
 
 ### Chronological Splitting Protocol
-* **Training Block:** First 70% of chronological records.
-* **Calibration / Validation Block:** Next 10% of records (held out exclusively for parameter tuning and CQR $q_{\text{hat}}$ calibration).
+* **Training Block:** First 72% of chronological records.
+* **Calibration / Validation Block:** Next 08% of records (held out exclusively for parameter tuning and CQR $q_{\text{hat}}$ calibration).
 * **Test Block:** Final 20% of records (evaluated strictly once; no data leakage).
 
 ---
@@ -159,7 +147,7 @@ All experiments can be executed either via the master runner or through step-by-
 ### Option A: Master Execution (All Steps)
 
 ```bash
-# Full reproduction (computes all tables T01–T14 and figures)
+# Full reproduction (computes all tables and figures)
 python run_all.py
 
 # Quick smoke test mode (reduced bootstrap repeats and quick checks)
