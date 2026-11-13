@@ -1,13 +1,5 @@
 """
 common.py  --  Shared, TensorFlow-FREE helpers (numpy / pandas only)
-======================================================================
-Data preparation follows the ORIGINAL legacy pipeline exactly:
-  - scaler fitted on ALL rows (legacy protocol)
-  - split_data: 20% test / 10% of remainder validation
-
-NOTHING in this file contains typed-in results.
-Every number is computed from data / checkpoints / saved files.
-
 Usage:
     Set environment variables before importing:
         P3_DATA   -- path to APSLDC_15min_Clean.xlsx
@@ -74,7 +66,7 @@ TOP10_LEGACY = [
 ]
 C3_CHECKPOINT_FEATURES = TOP10_LEGACY
 
-# 2. MANUSCRIPT_TABLE3_FEATURES: Top-10 features reported in Table 3 of Manuscript_Revision_Pass1
+# 2. Top-10 features 
 #    (derived from the revised permutation-importance evaluation of DTAQ C2 on training windows).
 MANUSCRIPT_TABLE3_FEATURES = [
     "Actual_MW", "hour", "solarenergy", "solarradiation", "uvindex",
@@ -340,13 +332,6 @@ def shift_outer(yq, qhat):
 
 
 def prospective_conformal(y, yq, init_scores, W=2880, alpha=ALPHA, gamma=None, delay=1):
-    """
-    Prospective split-conformal on a time-ordered stream.
-    - score of forecast t is usable only for forecasts t+delay (late labels)
-    - W: window of most recent scores
-    - gamma given -> Adaptive Conformal Inference (Gibbs & Candes 2021)
-    Returns (lo_adj, hi_adj, qhat_t, alpha_t).
-    """
     n  = len(y)
     lo, hi = yq[:, LO], yq[:, HI]
     s  = np.maximum(lo - y, y - hi)
@@ -591,8 +576,6 @@ def need(path, hint):
         raise FileNotFoundError(f"Missing {path}. {hint}")
     return path
 
-
-# ------------------------------------------------------------------ checkpoint config (no TensorFlow needed)
 def read_cfg(path):
     with zipfile.ZipFile(path) as z:
         return json.loads(z.read("config.json"))
