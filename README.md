@@ -104,8 +104,8 @@ paper-3-gravity/
 
 ```bash
 # 1. Clone repository
-git clone https://github.com/YOUR_USERNAME/paper3-dtaq-load-forecasting.git
-cd paper3-dtaq-load-forecasting
+git clone https://github.com/241rcs0005santhosh/Probabilistic-STLF-with-DTAQ-and-Conformal-Calibration---Evidence-from-the-Andhra-Pradesh-State-Grid.git
+cd Probabilistic-STLF-with-DTAQ-and-Conformal-Calibration---Evidence-from-the-Andhra-Pradesh-State-Grid
 
 # 2. Create virtual environment
 python -m venv venv
