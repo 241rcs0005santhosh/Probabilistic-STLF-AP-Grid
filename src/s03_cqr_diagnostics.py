@@ -8,7 +8,7 @@ Purpose:
   - Prospective methods: rolling-window split-conformal and ACI
   - Mondrian CQR (season x peak conditional calibration)
   - Conditional coverage tables (by season, hour, demand decile, peak/off-peak)
-  - Pinball reconciliation against manuscript Table 6 values
+  - Pinball reconciliation against manuscript Table 5 values
 
 Output (tables/, figures/):
   T04_cqr_diagnostics.csv|docx
@@ -45,7 +45,7 @@ W_GRID  = [288, 576, 1440, 2880, 5760]
 GAMMAS  = [0.001, 0.005, 0.01, 0.02, 0.05]
 DELAY   = 1   # label delay: score at t is usable only from t+1 (labels revealed on-the-fly)
 
-# Manuscript Table 6 average pinball values (for reconciliation only)
+# Manuscript Table 5 average pinball values (for reconciliation only)
 MAN_T6_PINBALL = {
     "C1_LSTM_Q": 35.154, "C1_CNN_BiGRU_Q": 35.667, "C1_DTAQ": 33.742,
     "C2_LSTM_Q": 32.890, "C2_CNN_BiGRU_Q": 33.040, "C2_DTAQ": 25.171,
