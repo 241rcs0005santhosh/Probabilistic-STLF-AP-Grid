@@ -10,18 +10,10 @@ Purpose:
     3. DTAQ-noCQR: Full DTAQ (TCN + Bahdanau temporal attention + NonCrossingQuantileHead) without CQR
     4. DTAQ [C2]: Full DTAQ + Post-hoc Conformalized Quantile Regression (CQR)
 
-Reviewer comments addressed: R1-4, R2-2
-
-Prerequisites:
-  - APSLDC_15min_Clean.xlsx available
-  - checkpoints/C2_DTAQ.keras available
-
 Output:
   tables/T11_component_study.csv|docx
   results/Paper3_Ablation_Results.xlsx
 
-Usage:
-    python s09_component_ablation.py
 """
 
 import os
