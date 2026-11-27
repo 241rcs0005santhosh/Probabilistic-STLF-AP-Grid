@@ -9,18 +9,10 @@ Purpose:
   Assesses ranking stability across repeated shuffles (Spearman rho, Kendall tau)
   and evaluates feature provenance against manuscript Table 5.
 
-Reviewer comments addressed: R1-8, R2-4
-
-Prerequisites:
-  - APSLDC_15min_Clean.xlsx available
-  - checkpoints/C2_DTAQ.keras available
-
 Output:
   tables/T14_permutation_importance.csv|docx
   results/s06_feature_provenance.json
 
-Usage:
-    python s06_permutation_importance.py
 """
 
 import os
