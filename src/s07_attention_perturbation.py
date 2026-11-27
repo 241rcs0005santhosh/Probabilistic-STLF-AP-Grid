@@ -14,20 +14,12 @@ Purpose:
     4 -- Last step (15 min before target) masked
   Also extracts the seasonal attention profile and computes profile stability.
 
-Reviewer comments addressed: R1-8, R2-4
-
-Prerequisites:
-  - APSLDC_15min_Clean.xlsx available
-  - checkpoints/C2_DTAQ.keras available
-
 Output:
   tables/T_attention_perturbation.csv|docx
   tables/T_attention_stability.csv|docx
   results/attention_profile_C2_DTAQ.csv
   figures/F13_attention_profile_inset.png
 
-Usage:
-    python s07_attention_perturbation.py
 """
 
 import os
