@@ -10,10 +10,6 @@ Purpose:
   - Conditional coverage tables (by season, hour, demand decile, peak/off-peak)
   - Pinball reconciliation against manuscript Table 6 values
 
-Reviewer comments addressed: R1-3, R1-4, R1-6, R1-7, R2-3
-
-Prerequisites: s01_legacy_inference.py must be run first.
-
 Output (tables/, figures/):
   T04_cqr_diagnostics.csv|docx
   T05_calibration_methods.csv|docx
@@ -27,12 +23,6 @@ Output (tables/, figures/):
   F05_coverage_by_decile_C2_DTAQ.png
   F05b_coverage_by_season_peak_C2_DTAQ.png
   F06_winkler_by_method_C2_DTAQ.png
-
-Runtime: ~10-15 min on CPU.
-
-Usage:
-    python s03_cqr_diagnostics.py
-    P3_PROTOCOL=strict python s03_cqr_diagnostics.py  # strict-protocol variant
 """
 
 import os
