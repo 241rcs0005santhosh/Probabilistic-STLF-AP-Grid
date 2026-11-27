@@ -1,5 +1,5 @@
 {
-  "project_name": "DTAQ-based Probabilistic Short-Term Load Forecasting",
+  "project_name": "Probabilistic Short-Term Load Forecasting with Dilated Temporal Convolutional Networks and Conformal Calibration: Evidence from the Andhra Pradesh State Grid",
   "dataset": {
     "filename": "APSLDC_15min_Clean.xlsx",
     "resolution_minutes": 15,
@@ -24,35 +24,11 @@
       "features": "all"
     },
     "C3": {
-      "description": "Compact feature subset: 48-step look-back (12 hours), Top-10 features selected by permutation importance",
+      "description": "Compact feature subset: 48-step look-back (12 hours), top-10 features from the DTAQ (C2) permutation-importance ranking on training windows (manuscript Table 3)",
       "look_back": 48,
       "horizon": 1,
       "feature_count": 10,
       "features": [
-        "Actual_MW",
-        "solarenergy",
-        "solarradiation",
-        "hour",
-        "TEMP",
-        "dew",
-        "humidity",
-        "feelslike",
-        "uvindex",
-        "is_weekend"
-      ],
-      "c3_checkpoint_features": [
-        "Actual_MW",
-        "solarenergy",
-        "solarradiation",
-        "hour",
-        "TEMP",
-        "dew",
-        "humidity",
-        "feelslike",
-        "uvindex",
-        "is_weekend"
-      ],
-      "manuscript_table3_features": [
         "Actual_MW",
         "hour",
         "solarenergy",
@@ -70,10 +46,11 @@
   "nominal_coverage_alpha": 0.10,
   "nominal_prediction_interval": "90%",
   "partition_fractions": {
-    "train": 0.70,
-    "calibration_validation": 0.10,
+    "train": 0.72,
+    "calibration_validation": 0.08,
     "test": 0.20
   },
+  "partition_note": "Chronological split of the 146,062 windows by target time. The validation partition is used for early stopping and as the CQR calibration set. The StandardScaler is fitted on all rows.",
   "training": {
     "batch_size": 256,
     "seed": 42,
