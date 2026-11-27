@@ -50,7 +50,7 @@ As reported in Table 3 of `Manuscript`, training-window permutation importance y
 ## 3. Repository Structure
 
 ```
-git clone https://github.com/241rcs0005santhosh/Probabilistic-STLF-AP-Grid.git
+https://github.com/241rcs0005santhosh/Probabilistic-STLF-AP-Grid.git
 ├── README.md                           # Master documentation & reproduction manual
 ├── requirements.txt                    # Python package dependencies
 ├── .gitignore                          # Exclusion rules for raw datasets and cache
@@ -283,6 +283,6 @@ If you use this code or model in your research, please cite:
 
 ---
 
-## 12. License
+## 11. License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
