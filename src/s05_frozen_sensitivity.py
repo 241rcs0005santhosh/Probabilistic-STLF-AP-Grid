@@ -12,19 +12,11 @@ Purpose:
   Flagged = repeated values of runs with at least MIN_RUN identical values.
   The first value of each run is kept (not flagged).
 
-Reviewer comments addressed: R1-11 (data quality robustness)
-
-Prerequisites: s01_legacy_inference.py must be run first.
-
 Output:
   tables/T_frozen_sensitivity.csv|docx
   tables/T_frozen_DM.csv|docx
   results/frozen_runs_min8.csv
 
-Runtime: ~3 min on CPU.
-
-Usage:
-    python s05_frozen_sensitivity.py
 """
 
 import os
