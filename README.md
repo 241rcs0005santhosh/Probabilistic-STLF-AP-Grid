@@ -1,4 +1,4 @@
-# DTAQ-based Probabilistic Short-Term Load Forecasting
+# "Probabilistic Short-Term Load Forecasting with Dilated Temporal Convolutional Networks and Conformal Calibration: Evidence from the Andhra Pradesh State Grid"
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/)
 [![TensorFlow 2.x](https://img.shields.io/badge/TensorFlow-2.x-orange.svg)](https://tensorflow.org/)
@@ -50,7 +50,7 @@ As reported in Table 3 of `Manuscript`, training-window permutation importance y
 ## 3. Repository Structure
 
 ```
-paper-3-gravity/
+git clone https://github.com/241rcs0005santhosh/Probabilistic-STLF-AP-Grid.git
 ├── README.md                           # Master documentation & reproduction manual
 ├── requirements.txt                    # Python package dependencies
 ├── .gitignore                          # Exclusion rules for raw datasets and cache
@@ -114,7 +114,7 @@ pip install -r requirements.txt
 
 ## 5. Dataset Preparation
 
-In compliance with journal data-sharing policies and utility non-disclosure agreements, restricted proprietary raw grid telemetry is not stored in the public repository. 
+The processed dataset is not redistributed in the repository because of the source terms.
 
 ### Obtaining Data
 * **Grid Demand Telemetry:** Historical 15-minute grid demand can be requested from the Andhra Pradesh State Load Despatch Centre ([APSLDC Portal](https://sldc.aptransco.co.in/)).
@@ -129,7 +129,7 @@ Save the processed dataset as `APSLDC_15min_Clean.xlsx` in the repository root (
 
 ### Chronological Splitting Protocol
 * **Training Block:** First 72% of chronological records.
-* **Calibration / Validation Block:** Next 08% of records (held out exclusively for parameter tuning and CQR $q_{\text{hat}}$ calibration).
+* **Calibration / Validation Block:** Validation partition (8%): used for early stopping and as the CQR calibration set.
 * **Test Block:** Final 20% of records (evaluated strictly once; no data leakage).
 
 ---
@@ -181,7 +181,7 @@ python src/s05_frozen_sensitivity.py
 ```
 
 #### Step 6: Permutation Feature Importance
-Performs shuffle permutation importance on training windows and evaluates feature provenance against manuscript Table 5:
+Performs shuffle permutation importance on training windows and evaluates feature provenance against manuscript Table 3:
 ```bash
 python src/s06_permutation_importance.py
 ```
@@ -246,7 +246,7 @@ Hyperparameters are strictly preserved:
 * **Learning rate:** Cosine decay restarts ($10^{-3} \to 10^{-5}$)
 * **Loss:** 7-quantile average pinball loss
 * **Patience:** 5 epochs (LSTM-Q, CNN-BiGRU-Q), 15 epochs (DTAQ)
-* **Random seed:** 42
+* **Random seed:** reported numbers use seed 42
 
 ---
 
@@ -268,26 +268,13 @@ The script `s01_legacy_inference.py` validates that the existing checkpoints rep
 
 ---
 
-## 10. Reviewer Inquiries Addressed
-
-1. **Receptive Field Clarification (R1-1, R2-1):**  
-   The theoretical receptive field of DTAQ's 5 causal residual blocks is $1 + 2 \times (3 - 1) \times \sum_{i=0}^4 2^i = 125$ steps. The input look-back window is explicitly configured to 48 steps (12 hours).
-2. **Signed CQR Formulation (R1-3, R2-3):**  
-   Negative $q_{\text{hat}}$ adjustments are retained, allowing the calibration step to contract over-covering prediction intervals to meet the nominal 90% target.
-3. **Serial Correlation in Tests (R1-5, R2-5):**  
-   Diebold-Mariano tests utilize Newey-West HAC variance estimates with automated Bartlett bandwidth ($L = \lfloor 4(N/100)^{2/9} \rfloor \approx 96$) and circular moving-block bootstrap (block length = 96 steps / 24 hours).
-4. **Attention Interpretation (R1-8, R2-4):**  
-   Bahdanau attention weights are documented as descriptive temporal importance diagnostics rather than strict causal attributions.
-
----
-
-## 11. Citation
+## 10. Citation
 
 If you use this code or model in your research, please cite:
 
 ```bibtex
 @article{santhosh2026dtaq,
-  title={DTAQ-based Probabilistic Short-Term Load Forecasting with Conformal Calibration: Evidence from the Andhra Pradesh State Grid},
+  title={"Probabilistic Short-Term Load Forecasting with Dilated Temporal Convolutional Networks and Conformal Calibration: Evidence from the Andhra Pradesh State Grid".},
   author={K N S K Santhosh and R Tamilkodi and A Ramesh},
   journal={International Journal of Intelligent Engineering and Systems},
   year={2026}
