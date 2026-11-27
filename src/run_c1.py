@@ -5,7 +5,7 @@ Experiment C1: Look-back = 1 step (15-min lag), All 26 Features.
 
 Evaluates LSTM-Q, CNN-BiGRU-Q, and DTAQ under the C1 condition:
   - Input shape: (1, 26)
-  - Split: 70% Train / 10% Cal / 20% Test (chronological)
+  - Split: 72% Train / 08% Cal / 20% Test (chronological)
   - Models evaluated: LSTM-Q, CNN-BiGRU-Q, DTAQ
   - Applies Conformalized Quantile Regression (CQR)
   - Evaluates both raw and calibrated prediction intervals
