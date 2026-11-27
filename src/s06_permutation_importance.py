@@ -7,7 +7,7 @@ Purpose:
   Computes permutation feature importance on training windows (and on test
   windows as a diagnostic) for the DTAQ C2 model (48 look-back steps, 26 features).
   Assesses ranking stability across repeated shuffles (Spearman rho, Kendall tau)
-  and evaluates feature provenance against manuscript Table 5.
+  and evaluates feature provenance against manuscript Table 3.
 
 Output:
   tables/T14_permutation_importance.csv|docx
@@ -28,14 +28,13 @@ from common_tf import *
 N_SAMPLE   = 2000
 K_REPEATS  = 10
 
-# Manuscript Table 3 reported values (from Manuscript_Revision_Pass1 Table 3)
+# Manuscript Table 3 reported values 
 MANUSCRIPT_TABLE3 = {
     "Actual_MW": 1799.71, "hour": 20.29, "solarenergy": 8.90, "solarradiation": 8.28,
     "uvindex": 5.44, "windspeed": 3.90, "feelslike": 2.82, "TEMP": 2.55,
     "sealevelpressure": 2.01, "icon_enc": 1.90
 }
 
-# Legacy Submission 2 values (for historical provenance audit)
 MANUSCRIPT_T5_LEGACY = {
     "Actual_MW": 1718.16, "solarenergy": 114.63, "solarradiation": 88.98, "hour": 42.53, "TEMP": 40.12,
     "dew": 33.83, "humidity": 32.75, "feelslike": 15.79, "uvindex": 7.94, "is_weekend": 4.81, "sealevelpressure": 3.80,
@@ -98,7 +97,6 @@ def main():
 
     print("\nTop-10 on training windows:", top_tr)
     print("Top-10 on test windows    :", top_te)
-    print("Jaccard(train top-10, checkpoint C3 list)    =", round(jac(top_tr, TOP10_LEGACY), 3))
     print("Jaccard(train top-10, manuscript Table 3 list)=", round(jac(top_tr, MANUSCRIPT_TABLE3_FEATURES), 3))
     print("Jaccard(train top-10, test top-10)           =", round(jac(top_tr, top_te), 3))
 
@@ -108,8 +106,7 @@ def main():
         dRMSE_test_mean=mte[i], dRMSE_test_sd=sdte[i], rank_test=rk_te[i],
         in_c3_checkpoint_list=f in TOP10_LEGACY,
         in_manuscript_table3=f in MANUSCRIPT_TABLE3_FEATURES,
-        manuscript_table3_dRMSE=MANUSCRIPT_TABLE3.get(f, np.nan),
-        legacy_submission2_dRMSE=MANUSCRIPT_T5_LEGACY.get(f, np.nan)
+        manuscript_table3_dRMSE=MANUSCRIPT_TABLE3.get(f, np.nan)
     ) for i, f in enumerate(feats)]).sort_values("rank_train")
 
     write_table(
@@ -123,12 +120,9 @@ def main():
     with open(os.path.join(D_RES, "s06_feature_provenance.json"), "w") as f:
         json.dump(dict(
             top10_train=top_tr, top10_test=top_te,
-            c3_checkpoint_features=TOP10_LEGACY,
             manuscript_table3_features=MANUSCRIPT_TABLE3_FEATURES,
-            jaccard_train_checkpoint=jac(top_tr, TOP10_LEGACY),
             jaccard_train_table3=jac(top_tr, MANUSCRIPT_TABLE3_FEATURES),
-            jaccard_test_checkpoint=jac(top_te, TOP10_LEGACY)
-        ), f, indent=1)
+          ), f, indent=1)
 
     print("s06 complete.")
 
