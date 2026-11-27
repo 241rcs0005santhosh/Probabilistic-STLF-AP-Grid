@@ -8,7 +8,7 @@ Evaluates LSTM-Q, CNN-BiGRU-Q, and proposed DTAQ under the C3 condition:
   - Features: Top-10 features selected by permutation importance
       ['Actual_MW', 'solarenergy', 'solarradiation', 'hour', 'TEMP',
        'dew', 'humidity', 'feelslike', 'uvindex', 'is_weekend']
-  - Split: 70% Train / 10% Cal / 20% Test (chronological)
+  - Split: 72% Train / 08% Cal / 20% Test (chronological)
   - Models evaluated: LSTM-Q, CNN-BiGRU-Q, DTAQ
   - Applies Conformalized Quantile Regression (CQR)
   - Evaluates both raw and calibrated prediction intervals
