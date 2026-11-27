@@ -5,10 +5,12 @@ Experiment C3: Look-back = 48 steps (12 hours), Top-10 Features.
 
 Evaluates LSTM-Q, CNN-BiGRU-Q, and proposed DTAQ under the C3 condition:
   - Input shape: (48, 10)
-  - Features: Top-10 features selected by permutation importance
-      ['Actual_MW', 'solarenergy', 'solarradiation', 'hour', 'TEMP',
-       'dew', 'humidity', 'feelslike', 'uvindex', 'is_weekend']
-  - Split: 72% Train / 08% Cal / 20% Test (chronological)
+  - Features: top-10 features from the DTAQ (C2) permutation-importance
+    ranking on training windows (manuscript Table 3):
+      ["Actual_MW", "hour", "solarenergy", "solarradiation", "uvindex",
+       "windspeed", "feelslike", "TEMP", "sealevelpressure", "icon_enc"]
+  - Split: 72% train / 8% validation (also the CQR calibration set) / 20% test,
+    chronological
   - Models evaluated: LSTM-Q, CNN-BiGRU-Q, DTAQ
   - Applies Conformalized Quantile Regression (CQR)
   - Evaluates both raw and calibrated prediction intervals
@@ -38,10 +40,10 @@ def run_experiment_c3():
         raise FileNotFoundError(f"Dataset not found: {DATA_FILE}\nSet P3_DATA environment variable.")
 
     df, feats, ap = load_frame()
-    p = prepare(df, TOP10_LEGACY, lb=48, protocol="legacy")
+    p = prepare(df, C3_FEATURES, lb=48, protocol="legacy")
     print(f"C3 sequence count: {len(p.y):,} windows (train={len(p.idx['train']):,}, "
           f"cal={len(p.idx['cal']):,}, test={len(p.idx['test']):,})")
-    print(f"Features: {TOP10_LEGACY}")
+    print(f"Features: {C3_FEATURES}")
 
     results = []
     for arch in ARCHS:
