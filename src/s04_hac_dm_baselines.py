@@ -10,10 +10,6 @@ Purpose:
   - Probabilistic naive baseline: persistence + empirical residual quantiles
   - Performance on extreme ramp and peak subsets
 
-Reviewer comments addressed: R1-5, R1-9, R2-5, R2-6
-
-Prerequisites: s01_legacy_inference.py must be run first.
-
 Output:
   tables/T08_hac_dm.csv|docx
   tables/T09_baselines.csv|docx
@@ -25,11 +21,6 @@ Output:
   figures/F09_baselines_rmse.png
   figures/F10_ramp_peak_coverage_C2.png
 
-Runtime: ~5 min on CPU.
-
-Usage:
-    python s04_hac_dm_baselines.py
-    P3_PROTOCOL=strict python s04_hac_dm_baselines.py
 """
 
 import os
