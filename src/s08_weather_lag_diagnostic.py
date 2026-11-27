@@ -13,17 +13,9 @@ Purpose:
     - precipitation lagged 1 h
     - all weather set to feature mean (scaled 0.0)
 
-Reviewer comments addressed: R1-2, R2-1
-
-Prerequisites:
-  - APSLDC_15min_Clean.xlsx available
-  - checkpoints/C2_*.keras available
-
 Output:
   tables/T_information_set_diagnostic.csv|docx
 
-Usage:
-    python s08_weather_lag_diagnostic.py
 """
 
 import os
