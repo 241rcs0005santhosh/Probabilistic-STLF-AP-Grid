@@ -97,8 +97,8 @@ https://github.com/241rcs0005santhosh/Probabilistic-STLF-AP-Grid.git
 
 ```bash
 # 1. Clone repository
-https://github.com/241rcs0005santhosh/Probabilistic-STLF-with-DTAQ-and-Conformal-Calibration---Evidence-from-the-Andhra-Pradesh-State-Grid.git
-Probabilistic-STLF-with-DTAQ-and-Conformal-Calibration---Evidence-from-the-Andhra-Pradesh-State-Grid
+git clone https://github.com/241rcs0005santhosh/Probabilistic-STLF-AP-Grid.git
+cd Probabilistic-STLF-AP-Grid
 
 # 2. Create virtual environment
 python -m venv venv
