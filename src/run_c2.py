@@ -5,7 +5,7 @@ Experiment C2: Look-back = 48 steps (12 hours), All 26 Features.
 
 Evaluates LSTM-Q, CNN-BiGRU-Q, and proposed DTAQ under the C2 condition:
   - Input shape: (48, 26)
-  - Split: 70% Train / 10% Cal / 20% Test (chronological)
+  - Split: 72% Train / 08% Cal / 20% Test (chronological)
   - Models evaluated: LSTM-Q, CNN-BiGRU-Q, DTAQ
   - Applies Conformalized Quantile Regression (CQR)
   - Evaluates both raw and calibrated prediction intervals
