@@ -1,25 +1,5 @@
 """
 s01_legacy_inference.py
-=======================
-Step 1 of the reproduction pipeline.
-
-Purpose:
-  - Loads the 9 original .keras checkpoints (C1/C2/C3 x LSTM_Q/CNN_BiGRU_Q/DTAQ)
-  - Re-creates the legacy windows (scaler on ALL rows, legacy split_data) exactly
-  - Exports RAW 7-quantile predictions for the calibration block and the test block (MW)
-  - Performs a reproduction check against the values printed in the manuscript
-
-Reviewer comments addressed: R1-1, R1-2, R1-8, R1-10, R2-1
-
-Output:
-  cache/legacy_{cond}_{arch}.npz   -- raw quantile predictions + q_hat
-  results/m00_reproduction_check.csv
-  tables/T03_reproduction_check.csv|docx
-
-Runtime: ~5-10 min on GPU, ~15-20 min on CPU.
-
-Usage:
-    python s01_legacy_inference.py
 """
 
 import os
