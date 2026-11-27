@@ -10,8 +10,6 @@ Purpose:
   - Computes feature manifest and scaler-scope comparison
   - Reads receptive field directly from the DTAQ checkpoint configs
 
-Reviewer comments addressed: R1-1, R1-2, R1-8, R1-10, R2-1
-
 Output (tables/):
   T01_partition_manifest.csv|docx
   T02_feature_manifest.csv|docx
@@ -22,10 +20,6 @@ Output (tables/):
   results/flat_runs.csv
   results/weather_alignment_head.csv
 
-Runtime: ~2 min on CPU.
-
-Usage:
-    python s02_data_audit.py
 """
 
 import os
