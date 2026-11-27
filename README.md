@@ -18,8 +18,7 @@ This repository provides the complete, self-contained implementation of the **DT
 * **Dilated Temporal Convolutional Network (TCN):** 5-block causal residual TCN with exponential dilations $d \in \{1, 2, 4, 8, 16\}$, kernel size $k=3$, achieving a theoretical receptive field of 125 steps (capped at 48 historical steps = 12 hours).
 * **Bahdanau Temporal Attention:** Context-aware temporal pooling over TCN hidden states to focus on critical load transitions.
 * **Non-crossing Quantile Head (`NonCrossingQuantileHead`):** Strict structural guarantee preventing quantile crossing across all 7 nominal quantiles $\tau \in \{0.05, 0.10, 0.25, 0.50, 0.75, 0.90, 0.95\}$ via cumulative softplus increments.
-* **Post-hoc Conformalized Quantile Regression (CQR):** Finite-sample coverage calibration on a strictly separated calibration block ($q_{\text{hat}}$ signed adjustment).
-
+* **Post-hoc Conformalized Quantile Regression (CQR):** Finite-sample coverage calibration on a CQR calibration on the validation partition, which was also used for early stopping.
 ---
 
 ## 2. Experimental Conditions (C1, C2, C3)
@@ -98,8 +97,8 @@ https://github.com/241rcs0005santhosh/Probabilistic-STLF-AP-Grid.git
 
 ```bash
 # 1. Clone repository
-git clone https://github.com/241rcs0005santhosh/Probabilistic-STLF-with-DTAQ-and-Conformal-Calibration---Evidence-from-the-Andhra-Pradesh-State-Grid.git
-cd Probabilistic-STLF-with-DTAQ-and-Conformal-Calibration---Evidence-from-the-Andhra-Pradesh-State-Grid
+https://github.com/241rcs0005santhosh/Probabilistic-STLF-with-DTAQ-and-Conformal-Calibration---Evidence-from-the-Andhra-Pradesh-State-Grid.git
+Probabilistic-STLF-with-DTAQ-and-Conformal-Calibration---Evidence-from-the-Andhra-Pradesh-State-Grid
 
 # 2. Create virtual environment
 python -m venv venv
@@ -122,15 +121,15 @@ The processed dataset is not redistributed in the repository because of the sour
 
 ### File Format Requirements
 Save the processed dataset as `APSLDC_15min_Clean.xlsx` in the repository root (or specify its location via `P3_DATA`). The file must contain:
-1. `Datetime`: Timestamps at uniform 15-minute intervals.
+1. `Datetime`: Timestamps at uniform 15-minute intervals.(two absent timestamps (27 Aug 2021, 00:00 and 12:00) are not filled.
 2. `Actuals in MW` (or `Actual_MW`): Net system demand in Megawatts.
 3. 25 meteorological and temporal feature columns:
    `TEMP`, `feelslike`, `dew`, `humidity`, `precip`, `precipprob`, `windgust`, `windspeed`, `winddir`, `sealevelpressure`, `cloudcover`, `visibility`, `solarradiation`, `solarenergy`, `uvindex`, `severerisk`, `conditions`, `icon`, `preciptype`, `DAY NAME`, `holiday_status`, `hour`, `dow`, `is_weekend`.
 
 ### Chronological Splitting Protocol
-* **Training Block:** First 72% of chronological records.
-* **Calibration / Validation Block:** Validation partition (8%): used for early stopping and as the CQR calibration set.
-* **Test Block:** Final 20% of records (evaluated strictly once; no data leakage).
+training 72% 105,165 windows (1 April 2021 12:00 to 31 March 2024 23:30), 
+validation 08% 11,685 (31 March 2024 23:45 to 31 July 2024 16:45, used for early stopping and as the CQR calibration set), 
+test 20% 29,212 (31 July 2024 17:00 to 31 May 2025 23:45).
 
 ---
 
@@ -274,7 +273,7 @@ If you use this code or model in your research, please cite:
 
 ```bibtex
 @article{santhosh2026dtaq,
-  title={"Probabilistic Short-Term Load Forecasting with Dilated Temporal Convolutional Networks and Conformal Calibration: Evidence from the Andhra Pradesh State Grid".},
+  title={Probabilistic Short-Term Load Forecasting with Dilated Temporal Convolutional Networks and Conformal Calibration: Evidence from the Andhra Pradesh State Grid},
   author={K N S K Santhosh and R Tamilkodi and A Ramesh},
   journal={International Journal of Intelligent Engineering and Systems},
   year={2026}
