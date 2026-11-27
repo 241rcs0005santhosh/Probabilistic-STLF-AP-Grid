@@ -5,7 +5,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 Official implementation and reproduction repository for the research paper:  
-**"DTAQ-based Probabilistic Short-Term Load Forecasting with Conformal Calibration"**  
+**"Probabilistic Short-Term Load Forecasting with Dilated Temporal Convolutional Networks and Conformal Calibration: Evidence from the Andhra Pradesh State Grid"**  
 Submitted to *International Journal of Intelligent Engineering and Systems* (IJIES).
 
 ---
