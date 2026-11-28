@@ -57,22 +57,15 @@ MAX_EPOCHS = {"LSTM_Q": 30, "CNN_BiGRU_Q": 60, "DTAQ": 60}
 if QUICK:
     MAX_EPOCHS = {k: 2 for k in MAX_EPOCHS}
 
-# C3 feature subsets:
-# 1. C3_CHECKPOINT_FEATURES (TOP10_LEGACY): The exact 10 features used to train the 9 original checkpoints
-#    (matches C3_LSTM_Q.keras, C3_CNN_BiGRU_Q.keras, C3_DTAQ.keras with shape [None, 48, 10]).
-TOP10_LEGACY = [
-    "Actual_MW", "solarenergy", "solarradiation", "hour", "TEMP",
-    "dew", "humidity", "feelslike", "uvindex", "is_weekend"
-]
-C3_CHECKPOINT_FEATURES = TOP10_LEGACY
-
-# 2. Top-10 features 
-#    (derived from the revised permutation-importance evaluation of DTAQ C2 on training windows).
-MANUSCRIPT_TABLE3_FEATURES = [
+# C3 feature subset: top-10 features from the DTAQ (C2) permutation-importance
+# ranking on training windows (manuscript Table 3). Used for all C3 models.
+C3_FEATURES = [
     "Actual_MW", "hour", "solarenergy", "solarradiation", "uvindex",
     "windspeed", "feelslike", "TEMP", "sealevelpressure", "icon_enc"
 ]
-
+TOP10_LEGACY = C3_FEATURES
+C3_CHECKPOINT_FEATURES = C3_FEATURES
+MANUSCRIPT_TABLE3_FEATURES = C3_FEATURES
 
 def ckpt_path(cond, arch):
     return os.path.join(CKPT_DIR, f"{cond}_{arch}.keras")
